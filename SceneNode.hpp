@@ -16,5 +16,6 @@ class SceneNode
 	private:
 		std::vector<Ptr> mChildren;
 		SceneNode* mParent;
+
 };
 

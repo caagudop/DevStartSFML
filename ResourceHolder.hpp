@@ -2,6 +2,16 @@
 #include <cassert>
 #include <string>
 
+// Resource ID for sf::Texture
+namespace Textures
+{
+	enum ID
+	{
+		Raptor, 
+		Eagle,
+		Landscape,
+	};
+}
 
 template<typename Resource, typename Identifier>
 class ResourceHolder

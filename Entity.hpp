@@ -1,7 +1,8 @@
 #include <SFML\System\Vector2.hpp>
 #include <SFML\System\Time.hpp>
+#include "SceneNode.hpp"
 
-class Entity
+class Entity : public SceneNode
 {
 	public:
 		void				setVelocity(sf::Vector2f velocity);
@@ -10,5 +11,7 @@ class Entity
 
 	private:
 		sf::Vector2f		mVelocity;
+	private:
+		virtual void updateCurrent(sf::Time dt);
 };
 

@@ -1,9 +1,8 @@
 #pragma once
 #include "Entity.hpp"
 #include <SFML\Graphics\Sprite.hpp>
-#include "ResourceHolder.hpp"
+#include "ResourceIdentifiers.hpp"
 
-typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 
 class Aircraft : public Entity
 {

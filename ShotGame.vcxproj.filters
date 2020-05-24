@@ -30,6 +30,12 @@
     <ClCompile Include="SceneNode.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteNode.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ResourceHolder.hpp">
@@ -47,10 +53,33 @@
     <ClInclude Include="SceneNode.hpp">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteNode.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="World.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceIdentifiers.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ResourceHolder.inl">
       <Filter>Archivos de encabezado</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Media\Sansation.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Media\Textures\Desert.png">
+      <Filter>Archivos de recursos</Filter>
+    </Image>
+    <Image Include="Media\Textures\Eagle.png">
+      <Filter>Archivos de recursos</Filter>
+    </Image>
+    <Image Include="Media\Textures\Raptor.png">
+      <Filter>Archivos de recursos</Filter>
+    </Image>
   </ItemGroup>
 </Project>

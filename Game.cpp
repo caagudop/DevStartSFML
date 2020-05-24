@@ -1,117 +1,81 @@
 #include "Game.hpp"
-#include <iostream>
-#include "ResourceHolder.hpp"
 
-const float Game::PlayerSpeed = 100.f;
+#include <SFML/Window/Event.hpp>
+
+
 const sf::Time Game::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Game::Game()
-	: mWindow(sf::VideoMode(640, 480), "Resources", sf::Style::Close | sf::Style::Resize)
+	: mWindow(sf::VideoMode(640, 480), "World", sf::Style::Close)
 	, mFont()
 	, mStatisticsText()
 	, mStatisticsUpdateTime()
 	, mStatisticsNumFrames(0)
-	, mIsMovingUp(false)
-	, mIsMovingDown(false)
-	, mIsMovingRight(false)
-	, mIsMovingLeft(false)
+	, mWorld(mWindow)
 {
-
-	ResourceHolder<sf::Texture, Textures::ID> textures;
-	try
-	{
-		textures.load(Textures::Landscape, "Media/Textures/Desert.png");
-		textures.load(Textures::Eagle, "Media/Textures/Eagle.png");
-	}
-	catch (std::runtime_error & e)
-	{
-		std::cout << "Exception: " << e.what() << std::endl;
-	}
-
-
-	sf::Sprite landscape(textures.get(Textures::Landscape));
-	sf::Sprite airplane(textures.get(Textures::Eagle));
-	//landscape.~Drawable()
-	airplane.setPosition(200.f, 200.f);
-
 	mFont.loadFromFile("Media/Sansation.ttf");
 	mStatisticsText.setFont(mFont);
 	mStatisticsText.setPosition(5.f, 5.f);
 	mStatisticsText.setCharacterSize(10);
-
-
 }
-void Game::run() 
+
+void Game::run()
 {
 	sf::Clock clock;
-	sf::Time timeSinceLAstUpdate = sf::Time::Zero;
-
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	while (mWindow.isOpen())
 	{
 		sf::Time elapsedTime = clock.restart();
-		timeSinceLAstUpdate += elapsedTime;
-		while (timeSinceLAstUpdate > TimePerFrame)
+		timeSinceLastUpdate += elapsedTime;
+		while (timeSinceLastUpdate > TimePerFrame)
 		{
-			timeSinceLAstUpdate -= TimePerFrame;
+			timeSinceLastUpdate -= TimePerFrame;
+
 			processEvents();
 			update(TimePerFrame);
+
 		}
+
 		updateStatistics(elapsedTime);
 		render();
 	}
-
 }
+
 void Game::processEvents()
 {
 	sf::Event event;
 	while (mWindow.pollEvent(event))
 	{
-		switch (event.type) {
-		case sf::Event::Closed:
-			mWindow.close();
-			break;
-		case sf::Event::Resized:                                                                                                       
-			printf(" Alto: %i , Ancho %i", event.size.height, event.size.width);
-			break;
+		switch (event.type)
+		{
 		case sf::Event::KeyPressed:
 			handlePlayerInput(event.key.code, true);
 			break;
+
 		case sf::Event::KeyReleased:
 			handlePlayerInput(event.key.code, false);
+			break;
+
+		case sf::Event::Closed:
+			mWindow.close();
 			break;
 		}
 	}
 }
-void Game::update(sf::Time deltaTime) {
-	sf::Vector2f movement(0.f, 0.f);
-	if (mIsMovingUp)
-		movement.y -= PlayerSpeed;
-	if (mIsMovingDown)
-		movement.y += PlayerSpeed;
-	if (mIsMovingRight)
-		movement.x += PlayerSpeed;
-	if (mIsMovingLeft)
-		movement.x -= PlayerSpeed;
-	/*airplane.move(movement * deltaTime.asSeconds());*/
+
+void Game::update(sf::Time elapsedTime)
+{
+	mWorld.update(elapsedTime);
 }
+
 void Game::render()
 {
 	mWindow.clear();
-	mWindow.draw(landscape);
-	mWindow.draw(airplane);
+	mWorld.draw();
+
+	mWindow.setView(mWindow.getDefaultView());
 	mWindow.draw(mStatisticsText);
 	mWindow.display();
-}
-void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) 
-{
-	if (key == sf::Keyboard::W)
-		mIsMovingUp = isPressed;
-	if (key == sf::Keyboard::S)
-		mIsMovingDown = isPressed;
-	if (key == sf::Keyboard::D)
-		mIsMovingRight = isPressed;
-	if (key == sf::Keyboard::A)
-		mIsMovingLeft = isPressed;
 }
 
 void Game::updateStatistics(sf::Time elapsedTime)
@@ -125,7 +89,12 @@ void Game::updateStatistics(sf::Time elapsedTime)
 			"Frames / Second = " + std::to_string(mStatisticsNumFrames) + "\n"
 			//"Time / Update = " + std::to_string(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us");
 		);
+
 		mStatisticsUpdateTime -= sf::seconds(1.0f);
 		mStatisticsNumFrames = 0;
 	}
+}
+
+void Game::handlePlayerInput(sf::Keyboard::Key, bool)
+{
 }

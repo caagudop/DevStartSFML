@@ -2,6 +2,11 @@
 #include <algorithm>
 #include <cassert>
 
+
+SceneNode::SceneNode()
+{
+}
+
 void SceneNode::update(sf::Time dt)
 {
 	updateCurrent(dt);

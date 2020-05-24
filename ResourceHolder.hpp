@@ -1,25 +1,17 @@
-#include <SFML/Graphics.hpp>
-#include <cassert>
+#include <map>
 #include <string>
+#include <memory>
+#include <stdexcept>
+#include <cassert>
 
-// Resource ID for sf::Texture
-namespace Textures
-{
-	enum ID
-	{
-		Raptor, 
-		Eagle,
-		Landscape,
-	};
-}
 
-template<typename Resource, typename Identifier>
+template <typename Resource, typename Identifier>
 class ResourceHolder
 {
 private:
 
 	std::map<Identifier,
-		std::unique_ptr<sf::Texture>>	mResourceMap;
+		std::unique_ptr<Resource>>	mResourceMap;
 private:
 
 	void insertResource(Identifier id, std::unique_ptr<Resource> resource);

@@ -1,32 +1,36 @@
-#include <SFML/Graphics.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include "World.hpp"
 
-class Game {
+
+class Game : private sf::NonCopyable
+{
 public:
 	Game();
 	void run();
-private:
-	void processEvents();
-	void update(sf::Time deltaTime);
-	void render();
 
-	void updateStatistics(sf::Time elapsedTime);
-	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
 private:
+	void	processEvents();
+	void	update(sf::Time elapsedTime);
+	void	render();
 
-	static const float		PlayerSpeed;
+	void	updateStatistics(sf::Time elapsedTime);
+	void	handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+
+
+private:
 	static const sf::Time	TimePerFrame;
 
-	sf::RenderWindow mWindow;
-	sf::Font		mFont;
-	sf::Sprite		landscape;
-	sf::Sprite		airplane;
-	sf::Text		mStatisticsText;
-	sf::Time		mStatisticsUpdateTime;
-	std::size_t		mStatisticsNumFrames;
+	sf::RenderWindow	mWindow;
+	World			     mWorld;
 
-	bool mIsMovingUp;
-	bool mIsMovingDown;
-	bool mIsMovingRight;
-	bool mIsMovingLeft;
+	sf::Font				mFont;
+	sf::Text				mStatisticsText;
+	sf::Time				mStatisticsUpdateTime;
+	std::size_t			mStatisticsNumFrames;
 };
+

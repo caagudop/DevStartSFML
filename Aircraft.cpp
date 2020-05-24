@@ -1,6 +1,7 @@
 #include "Aircraft.hpp"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
+#include "ResourceHolder.hpp"
 
 Textures::ID toTextureID(Aircraft::Type type)
 {
